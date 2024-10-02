@@ -23,7 +23,7 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 // Running the test script (Make sure the path is correct)
-                sh 'python jenkins/selenium_test.py'
+                sh 'python python-test/selenium_test.py'
             }
         }
     }

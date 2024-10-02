@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+
+    environment {
+        CHROME_DRIVER_PATH = 'C:/Users/user/Downloads/chromedriver-win64/chromedriver.exe'  // Update this path if necessary
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                // Jenkins will pull the code from your Git repository
+                git branch: 'main', url: 'https://github.com/Mali-121/QA-test.git'  // Replace with your actual GitHub repo URL
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                // Installing Selenium dependencies for Python
+                sh 'pip install selenium'
+            }
+        }
+
+        stage('Run Selenium Tests') {
+            steps {
+                // Running the test script (Make sure the path is correct)
+                sh 'python jenkins/selenium_test.py'
+            }
+        }
+    }
+
+    post {
+        always {
+            // Optional: Archive test reports and send notifications
+            junit '**/test-reports/*.xml'
+            emailext(
+                subject: "Test Result: ${currentBuild.result}",
+                body: "The build has ${currentBuild.result}. Check details at: ${env.BUILD_URL}",
+                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+            )
+        }
+    }
+}

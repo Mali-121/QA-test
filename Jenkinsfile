@@ -2,36 +2,37 @@ pipeline {
     agent any
 
     environment {
-        CHROME_DRIVER_PATH = 'C:/Users/user/Downloads/chromedriver-win64/chromedriver.exe'  // Update this path if necessary
+        CHROME_DRIVER_PATH = 'C:/Users/user/Downloads/chromedriver-win64/chromedriver.exe'  // Update this path as needed
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Jenkins will pull the code from your Git repository
-                git branch: 'main', url: 'https://github.com/Mali-121/QA-test.git'  // Replace with your actual GitHub repo URL
+                git branch: 'main', url: 'https://github.com/Mali-121/QA-test.git'
             }
         }
 
         stage('Install Dependencies') {
             steps {
-                // Installing Selenium dependencies for Python
-                sh 'pip install selenium'
+                // Install dependencies (ensure Python and Selenium are installed)
+                sh 'pip install selenium'  // On Windows, you can use 'bat' instead of 'sh' for batch commands
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
-                // Running the test script (Make sure the path is correct)
-                sh 'python python-test/selenium_test.py'
+                // Run your Selenium test script (use 'bat' for Windows)
+                bat 'python python-test/selenium_test.py'  // Change 'sh' to 'bat' for Windows
             }
         }
     }
 
     post {
         always {
-            // Optional: Archive test reports and send notifications
-            junit '**/test-reports/*.xml'
+            // If you are not generating JUnit reports, you can remove this step
+            junit '**/test-reports/*.xml'  // Remove this if you are not generating JUnit reports
+
+            // Optional: Send an email notification
             emailext(
                 subject: "Test Result: ${currentBuild.result}",
                 body: "The build has ${currentBuild.result}. Check details at: ${env.BUILD_URL}",

@@ -22,11 +22,7 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 // Run your Selenium test script (use 'bat' for Windows)
-<<<<<<< HEAD:jenkinsfile
                 bat 'python python-test/selanium_test.py'  // Change 'sh' to 'bat' for Windows
-=======
-                bat 'python python-test/selenium_test.py'  // Change 'sh' to 'bat' for Windows
->>>>>>> 8a52f10df2e16dcc10847d6d235dc9a09b0d70f3:Jenkinsfile
             }
         }
     }

@@ -18,11 +18,28 @@ pipeline {
     }
 
     post {
+        success {
+            emailext(
+                to: 'ali@smartwalkietalkie.com',
+                subject: "Build Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "The build was successful.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                attachLog: true
+            )
+        }
+        failure {
+            emailext(
+                to: 'ali@smartwalkietalkie.com',
+                subject: "Build Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "The build has failed.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                attachLog: true
+            )
+        }
         always {
             emailext(
-                to: 'm.ali149@outlook.com',
-                subject: "Test Result: ${currentBuild.result}",
-                body: "The build has ${currentBuild.result}. Check details at: ${env.BUILD_URL}"
+                to: 'ali@smartwalkietalkie.com',
+                subject: "Build Completed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
+                body: "The build has completed with result: ${currentBuild.result}.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                attachLog: true
             )
         }
     }

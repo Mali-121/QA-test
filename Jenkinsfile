@@ -1,42 +1,29 @@
 pipeline {
     agent any
 
-    environment {
-        CHROME_DRIVER_PATH = 'C:/Users/user/Downloads/chromedriver-win64/chromedriver.exe'  // Update this path as needed
-    }
-
     stages {
-        stage('Checkout Code') {
+        stage('Check Python Installation') {
             steps {
-                git branch: 'main', url: 'https://github.com/Mali-121/QA-test.git'
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                // Install dependencies (ensure Python and Selenium are installed)
-                bat 'pip install selenium'  // Use 'bat' for Windows commands
+                // Use full path to Python executable
+                bat 'C:/Users/user/AppData/Local/Programs/Python/Python312/python.exe --version'
+                bat 'C:/Users/user/AppData/Local/Programs/Python/Python312/Scripts/pip.exe --version'
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
-                // Run your Selenium test script (use 'bat' for Windows)
-                bat 'python python-test/selanium_test.py'  // Ensure the correct path to your test script
+                // Use the full path to Python executable when running the Selenium test
+                bat 'C:/Users/user/AppData/Local/Programs/Python/Python312/python.exe python-test/selenium_test.py'
             }
         }
     }
 
     post {
         always {
-            // Optional: If you're not generating JUnit reports, you can remove this step
-            // junit '**/test-reports/*.xml'  // Remove this if you are not generating JUnit reports
-
-            // Optional: Send an email notification
             emailext(
+                to: 'm.ali149@outlook.com',  // Your email address
                 subject: "Test Result: ${currentBuild.result}",
-                body: "The build has ${currentBuild.result}. Check details at: ${env.BUILD_URL}",
-                recipientProviders: [[$class: 'DevelopersRecipientProvider']]
+                body: "The build has ${currentBuild.result}. Check details at: ${env.BUILD_URL}"
             )
         }
     }

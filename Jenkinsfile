@@ -15,22 +15,22 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 // Install dependencies (ensure Python and Selenium are installed)
-                sh 'pip install selenium'  // On Windows, you can use 'bat' instead of 'sh' for batch commands
+                bat 'pip install selenium'  // Use 'bat' for Windows commands
             }
         }
 
         stage('Run Selenium Tests') {
             steps {
                 // Run your Selenium test script (use 'bat' for Windows)
-                bat 'python python-test/selanium_test.py'  // Change 'sh' to 'bat' for Windows
+                bat 'python python-test/selanium_test.py'  // Ensure the correct path to your test script
             }
         }
     }
 
     post {
         always {
-            // If you are not generating JUnit reports, you can remove this step
-            junit '**/test-reports/*.xml'  // Remove this if you are not generating JUnit reports
+            // Optional: If you're not generating JUnit reports, you can remove this step
+            // junit '**/test-reports/*.xml'  // Remove this if you are not generating JUnit reports
 
             // Optional: Send an email notification
             emailext(

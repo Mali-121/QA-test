@@ -13,7 +13,7 @@ pipeline {
         stage('Run Selenium Tests') {
             steps {
                 // Use the full path to Python executable when running the Selenium test
-                bat 'C:/Users/user/AppData/Local/Programs/Python/Python312/python.exe python-test/selenium_test.py'
+                bat 'C:/Users/user/AppData/Local/Programs/Python/Python312/python.exe python-test/selanium_test.py'
             }
         }
     }

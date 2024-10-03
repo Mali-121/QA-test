@@ -1,5 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -8,9 +9,13 @@ import time
 
 class LoginTest(unittest.TestCase):
     def setUp(self):
+        # Set Chrome options to suppress logging
+        chrome_options = Options()
+        chrome_options.add_argument('--log-level=3')  # Only show severe errors
+
         # Specify the full path to ChromeDriver using the Service object
         chrome_service = Service(r'C:\Users\user\Downloads\chromedriver-win64\chromedriver.exe')
-        self.driver = webdriver.Chrome(service=chrome_service)
+        self.driver = webdriver.Chrome(service=chrome_service, options=chrome_options)
         self.driver.maximize_window()
         self.driver.implicitly_wait(10)  # Implicit wait
 

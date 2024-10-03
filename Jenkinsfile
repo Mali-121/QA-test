@@ -23,6 +23,7 @@ pipeline {
                 to: 'm.aliapukhwah@gmail.com',
                 subject: "Build Successful: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "The build was successful.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                from: 'm.ali149@outlook.com',
                 attachLog: true
             )
         }
@@ -31,6 +32,7 @@ pipeline {
                 to: 'm.aliapukhwah@gmail.com',
                 subject: "Build Failed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "The build has failed.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                from: 'm.ali149@outlook.com',
                 attachLog: true
             )
         }
@@ -39,6 +41,7 @@ pipeline {
                 to: 'm.aliapukhwah@gmail.com',
                 subject: "Build Completed: ${env.JOB_NAME} [${env.BUILD_NUMBER}]",
                 body: "The build has completed with result: ${currentBuild.result}.\nJob Name: ${env.JOB_NAME}\nBuild Number: ${env.BUILD_NUMBER}\nBuild URL: ${env.BUILD_URL}",
+                from: 'm.ali149@outlook.com',
                 attachLog: true
             )
         }
